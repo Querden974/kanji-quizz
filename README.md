@@ -1,9 +1,16 @@
-# React + Vite
+# Kanji Quizz
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ce projet est une application React qui utilise Redux pour gérer les états et les actions.
+Le but est de créer un jeu de quizz en japonais.
 
-Currently, two official plugins are available:
+Pour le moment, uniquement le grade 1 des kanji est pris en charge.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-# kanji-quizz
+API utilisée : https://kanjiapi.dev/v1/
+
+## Outils utilisés
+
+- React
+- Redux
+- Vite
+- Tailwind CSS
+- Github
