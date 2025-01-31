@@ -9,8 +9,10 @@ export default function Card() {
   const [currentKanji, setCurrentKanji] = useState("");
   const [kanjiInfo, setKanjiInfo] = useState(undefined);
   const [select, setSelect] = useState(undefined);
-  const [alertInfo, setAlertInfo] = useState({});
-  const [progress, setProgress] = useState(100);
+  const [alertInfo, setAlertInfo] = useState({
+    message: "",
+    type: "",
+  });
 
   const dispatch = useDispatch();
   const choicesData = useSelector((state) => state.choices);
@@ -44,7 +46,6 @@ export default function Card() {
     const sortedChoices = [...choices].sort(() => Math.random() - 0.5);
     return Array.from(sortedChoices);
   }
-  const choices = generateChoices();
 
   // -----------------------------------------------------------------------------
   function pickChoice(choice) {
@@ -58,17 +59,10 @@ export default function Card() {
         : "Mauvaise réponse !",
       type: isCorrect ? "alert-success" : "alert-error",
     });
-
-    // calculer progress bar pour reloader la page
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 1000);
-
-    console.log(alertInfo);
   }
   // Déclencher quand le kanji change
   useEffect(() => {
-    if (kanji.data && kanji.data.length > 0) {
+    if (kanji.data?.length > 0) {
       const newKanji = randomKanji();
       setCurrentKanji(newKanji);
     }
@@ -95,7 +89,6 @@ export default function Card() {
       );
 
       setKanjiInfo(kanjiInfo);
-      console.log(kanjiInfo);
     }
   }, [choicesData.data]); // Déclenché uniquement quand `choicesData.data` change
 
@@ -108,7 +101,7 @@ export default function Card() {
         <div className="card-body items-center text-center">
           <p>Que signifie ce kanji ?</p>
           <div className="card-actions grid grid-cols-2 gap-4 w-full">
-            {choicesData &&
+            {choicesData.data?.length > 0 ? (
               choicesData.data.map((choice, index) => (
                 <button
                   key={index}
@@ -123,7 +116,10 @@ export default function Card() {
                 >
                   {choice.heisig_en}
                 </button>
-              ))}
+              ))
+            ) : (
+              <p>Chargement des choix...</p>
+            )}
           </div>
         </div>
       </div>
