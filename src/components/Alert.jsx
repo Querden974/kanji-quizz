@@ -32,7 +32,7 @@ export default function Alert({ message, type }) {
   }, []);
 
   return (
-    <div role="alert" className={`flex flex-col alert ${type}`}>
+    <div role="alert" className={`flex flex-col alert select-none ${type}`}>
       <div className="flex items-center gap-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
