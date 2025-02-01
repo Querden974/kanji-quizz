@@ -1,8 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setReload } from "../features/settings";
+import { resetState } from "../features/kanjiApi";
 
 export default function Alert({ message, type }) {
   const [progress, setProgress] = useState(0); // Progression en %
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const duration = 3000; // Durée totale en millisecondes (3 secondes)
@@ -15,7 +19,8 @@ export default function Alert({ message, type }) {
         if (prev + increment >= 100) {
           clearInterval(interval); // Arrête l'animation quand elle est terminée
           setTimeout(() => {
-            window.location.reload(); // Recharge la page après l'animation
+            dispatch(setReload()); // Déclenche une action pour recharger la page
+            // window.location.reload(); // Recharge la page après l'animation
           }, 500);
           return 100;
         }
