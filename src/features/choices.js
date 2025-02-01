@@ -15,10 +15,12 @@ const choicesSlice = createSlice({
   reducers: {
     setKanji: (state, action) => {
       state.kanji = action.payload;
+      //console.log("slice:" + state.kanji);
     },
     addChoices: (state, action) => {
+      state.choices = [];
       state.choices = action.payload;
-      //console.log("Choices updated:", action.payload);
+      //console.log("slice:" + state.choices);
     },
     addData: (state, action) => {
       state.data = [];
@@ -36,8 +38,6 @@ const choicesSlice = createSlice({
 
 export function getDataKanji() {
   return async (dispatch, getState) => {
-    dispatch(addLoading(true));
-
     const state = getState();
     const choices = state.choices.choices; // Vérifie bien que le state est bien structuré ainsi
 
@@ -47,6 +47,8 @@ export function getDataKanji() {
     }
 
     try {
+      dispatch(addLoading(true));
+
       const responses = await Promise.all(
         choices.map(async (choice) => {
           const response = await fetch(apiUrl + choice);
@@ -59,6 +61,7 @@ export function getDataKanji() {
     } catch (error) {
       dispatch(addError());
     } finally {
+      //console.log("🚀 Slice Choices:", state.choices);
       dispatch(addLoading(false));
     }
   };
