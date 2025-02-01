@@ -1,53 +1,20 @@
 import React from "react";
 import Alert from "./Alert";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setKanji, addChoices } from "../features/choices";
+
 import { getDataKanji } from "../features/choices";
 
-export default function Card() {
-  const [currentKanji, setCurrentKanji] = useState("");
-  const [kanjiInfo, setKanjiInfo] = useState(undefined);
-  const [select, setSelect] = useState(undefined);
+export default function Card({ currentKanji, choicesData }) {
+  const [select, setSelect] = useState(false); // Sélection de la réponse
+
   const [alertInfo, setAlertInfo] = useState({
     message: "",
     type: "",
   });
-
   const dispatch = useDispatch();
-  const choicesData = useSelector((state) => state.choices);
+  const choices = useSelector((state) => state.choices.data);
 
-  const kanji = useSelector((state) => state.api);
-
-  // Get a random kanji
-  function randomKanji() {
-    if (kanji.data && kanji.data.length > 0) {
-      const maxList = kanji.data.length;
-      const randomIndex = Math.floor(Math.random() * maxList);
-      return kanji.data[randomIndex];
-    }
-    return null;
-  }
-  // -----------------------------------------------------------------------------
-
-  // Get 4 random kanji
-  function generateChoices() {
-    if (!kanji.data || kanji.data.length < 4) return [];
-
-    const choices = new Set();
-    choices.add(currentKanji);
-
-    while (choices.size < 4) {
-      const randKanji = randomKanji();
-      if (randKanji) {
-        choices.add(randKanji);
-      }
-    }
-    const sortedChoices = [...choices].sort(() => Math.random() - 0.5);
-    return Array.from(sortedChoices);
-  }
-
-  // -----------------------------------------------------------------------------
   function pickChoice(choice) {
     setSelect(true); // Change l’état, mais ça n'affecte pas cette exécution
 
@@ -60,65 +27,46 @@ export default function Card() {
       type: isCorrect ? "alert-success" : "alert-error",
     });
   }
-  // Déclencher quand le kanji change
   useEffect(() => {
-    if (kanji.data?.length > 0) {
-      const newKanji = randomKanji();
-      setCurrentKanji(newKanji);
-    }
-  }, [kanji.data]); // Déclenché uniquement quand les données changent
-
-  useEffect(() => {
-    if (currentKanji) {
-      dispatch(setKanji(currentKanji));
-      dispatch(addChoices(generateChoices()));
-      if (
-        !choicesData.loading &&
-        !choicesData.error &&
-        choicesData.data.length === 0
-      ) {
-        dispatch(getDataKanji());
-      }
-    }
+    dispatch(getDataKanji());
   }, [currentKanji]); // Déclenché uniquement quand `currentKanji` change
-
-  useEffect(() => {
-    if (choicesData.data.length > 0) {
-      const kanjiInfo = choicesData.data.find(
-        (kanji) => kanji.kanji === currentKanji
-      );
-
-      setKanjiInfo(kanjiInfo);
-    }
-  }, [choicesData.data]); // Déclenché uniquement quand `choicesData.data` change
 
   return (
     <>
       <div className="card bg-base-100 w-96 shadow-xl">
+        {/* <button
+          className="btn btn-warning ml-auto mt-auto"
+          onClick={() => dispatch(setReload())}
+        >
+          Reload
+        </button> */}
         <figure className="px-10 pt-10 flex flex-col gap-4">
-          <h1 className="text-9xl font-bold pb-6">{currentKanji}</h1>
+          <h1 className="text-9xl font-bold pb-6 select-none">
+            {currentKanji}
+          </h1>
         </figure>
         <div className="card-body items-center text-center">
           <p>Que signifie ce kanji ?</p>
           <div className="card-actions grid grid-cols-2 gap-4 w-full">
-            {choicesData.data?.length > 0 ? (
-              choicesData.data.map((choice, index) => (
+            {choices?.length > 0 ? (
+              choices.map((choice, index) => (
                 <button
-                  key={index}
-                  className={`btn capitalize ${
+                  key={`${choice.kanji}-${index}`}
+                  className={`select-none py-2 px-4 cursor-pointer rounded capitalize font-bold ${
                     !select
-                      ? "btn-primary"
+                      ? "bg-primary hover:bg-primary/75"
                       : choice.kanji === currentKanji
-                      ? "btn-success"
-                      : "btn-error"
-                  }`}
+                      ? "bg-success border-4 border-success"
+                      : "bg-error border-4 border-error"
+                  } }`}
                   onClick={() => pickChoice(choice)}
+                  disabled={select}
                 >
                   {choice.heisig_en}
                 </button>
               ))
             ) : (
-              <p>Chargement des choix...</p>
+              <span className="loading loading-spinner loading-lg"></span>
             )}
           </div>
         </div>
