@@ -2,23 +2,26 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-export default function Countdown() {
+export default function Countdown({ status, select }) {
   const [progress, setProgress] = useState(0);
 
   const settings = useSelector((state) => state.settings);
   const [duration, setDuration] = useState(settings.timer);
 
-  useEffect(() => {
-    const intervalTime = 1000;
-    const increment = 1;
+  const intervalTime = 1000;
+  var increment = 1;
 
+  useEffect(() => {
     const interval = setInterval(() => {
+      if (select) {
+        clearInterval(interval);
+        increment = 0;
+      }
       setProgress((prev) => {
         if (prev + increment >= duration) {
           clearInterval(interval); // Arrête l'animation quand elle est terminée
           setTimeout(() => {
-            //dispatch(setReload()); // Déclenche une action pour recharger la page
-            // window.location.reload(); // Recharge la page après l'animation
+            status(true);
           }, 500);
           return duration;
         }
@@ -27,7 +30,7 @@ export default function Countdown() {
     }, intervalTime);
 
     return () => clearInterval(interval); // Nettoyage en cas de démontage
-  }, []);
+  }, [select]);
 
   return (
     <>
