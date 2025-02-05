@@ -15,9 +15,18 @@ API utilisée : https://kanjiapi.dev/v1/
 
 ## Changelog
 
+### Version 1.2
+
+**Date de publication :** _05/02/2025_
+
+- Ajout d'un timer pour le quizz.
+- Ajout d'une limite de question par quizz.
+- Ajout d'un composant pour un historique des réponses.
+- Ajout d'une page récapitulative des réponses à la fin du quizz.
+
 ### Version 1.1
 
-**Date de publication :** 01/02/2025
+**Date de publication :** _01/02/2025_
 
 - Ajout d'une page de réglages pour le niveau de difficulté.
 - Sélection de la difficulté en fonction du niveau de difficulté sélectionné, du grade 1 à 7.
@@ -26,7 +35,7 @@ API utilisée : https://kanjiapi.dev/v1/
 
 ### Version 1.0
 
-**Date de publication :** 31/01/2025
+**Date de publication :** _31/01/2025_
 
 - Quizz fonctionnel avec choix aleatoires de caractères japonais
 - Choix multiples
