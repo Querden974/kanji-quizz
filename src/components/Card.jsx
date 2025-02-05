@@ -5,8 +5,9 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getDataKanji } from "../features/choices";
+import { setAnswers, setScore } from "../features/players";
 
-export default function Card({ currentKanji, choicesData }) {
+export default function Card({ currentKanji, player }) {
   const [select, setSelect] = useState(false); // Sélection de la réponse
   const [end, setEnd] = useState(false);
   const [alertInfo, setAlertInfo] = useState({
@@ -21,6 +22,11 @@ export default function Card({ currentKanji, choicesData }) {
     setSelect(true); // Change l’état, mais ça n'affecte pas cette exécution
 
     const isCorrect = choice.kanji === currentKanji;
+    dispatch(
+      setAnswers({ kanji: currentKanji, answer: isCorrect ? true : false })
+    );
+    if (isCorrect) dispatch(setScore());
+    //player.score = isCorrect ? true : false;
 
     setAlertInfo({
       message: isCorrect
@@ -35,6 +41,7 @@ export default function Card({ currentKanji, choicesData }) {
 
   function handleEnd() {
     setSelect(true);
+    dispatch(setAnswers({ kanji: currentKanji, answer: false }));
     setAlertInfo({
       message: "Temps écoulé ! Tu as perdu !",
       type: "alert-error",
@@ -53,8 +60,8 @@ export default function Card({ currentKanji, choicesData }) {
   }, [end]);
 
   return (
-    <>
-      <div className="card bg-base-100 w-96 shadow-xl">
+    <div className="flex flex-col h-110 static">
+      <div className="card bg-base-100 w-96  shadow-xl">
         <Countdown status={setEnd} select={select} />
         {/* <button
           className="btn btn-warning ml-auto mt-auto"
@@ -78,8 +85,8 @@ export default function Card({ currentKanji, choicesData }) {
                     !select
                       ? "bg-primary hover:bg-primary/75"
                       : choice.kanji === currentKanji
-                      ? "bg-success border-4 border-success"
-                      : "bg-error border-4 border-error"
+                      ? "bg-success "
+                      : "bg-error "
                   } }`}
                   onClick={() => pickChoice(choice)}
                   disabled={select}
@@ -100,6 +107,6 @@ export default function Card({ currentKanji, choicesData }) {
           icon={alertInfo.icon}
         />
       )}
-    </>
+    </div>
   );
 }
