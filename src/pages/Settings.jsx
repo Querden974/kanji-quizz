@@ -1,6 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setPseudo, setDifficulty, setTimer } from "../features/settings";
+import {
+  setPseudo,
+  setDifficulty,
+  setTimer,
+  setPack,
+} from "../features/settings";
 import { setUrlApi } from "../features/kanjiApi";
 import { useState } from "react";
 import { getData } from "../features/kanjiApi";
@@ -82,6 +87,7 @@ export default function Settings() {
           </div>
         </div>
         {/* ------------------------------- */}
+        {/* Set Timer duration  */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">
@@ -96,6 +102,24 @@ export default function Settings() {
             onChange={(e) => dispatch(setTimer(Number(e.target.value)))}
             className="range"
             step={1}
+          />
+        </div>
+        {/* ------------------------------- */}
+        {/* Set pack size  */}
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">
+              Pack size: <b>{settings.pack}</b>
+            </span>
+          </label>
+          <input
+            type="range"
+            min="10"
+            max="100"
+            value={settings.pack}
+            onChange={(e) => dispatch(setPack(Number(e.target.value)))}
+            className="range"
+            step={10}
           />
         </div>
         <div className="card-actions justify-end">

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setReload } from "../features/settings";
+import { setReload, setAlert } from "../features/settings";
 import { resetState } from "../features/kanjiApi";
 
 export default function Alert({ message, type, icon }) {
@@ -19,6 +19,7 @@ export default function Alert({ message, type, icon }) {
         if (prev + increment >= 100) {
           clearInterval(interval); // Arrête l'animation quand elle est terminée
           setTimeout(() => {
+            //dispatch(setAlert(false));
             dispatch(setReload()); // Déclenche une action pour recharger la page
             // window.location.reload(); // Recharge la page après l'animation
           }, 500);

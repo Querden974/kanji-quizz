@@ -4,7 +4,7 @@ import Answers from "../components/Answers";
 import Countdown from "./Countdown";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import { setAlert } from "../features/settings";
 import { getDataKanji } from "../features/choices";
 import { setAnswers, setScore } from "../features/players";
 
@@ -21,7 +21,7 @@ export default function Card({ currentKanji, player }) {
 
   function pickChoice(choice) {
     setSelect(true); // Change l’état, mais ça n'affecte pas cette exécution
-
+    dispatch(setAlert(true));
     const isCorrect = choice.kanji === currentKanji;
     dispatch(
       setAnswers({ kanji: currentKanji, answer: isCorrect ? true : false })
@@ -112,7 +112,7 @@ export default function Card({ currentKanji, player }) {
           />
         )}
       </div>
-      <Answers />
+      <Answers isLine={false} />
     </div>
   );
 }

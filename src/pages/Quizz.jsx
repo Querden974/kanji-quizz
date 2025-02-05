@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../components/Card";
-import Liste from "../components/Liste";
+import Results from "../components/Results";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
@@ -9,6 +9,8 @@ import { getDataKanji } from "../features/choices";
 
 export default function Quizz() {
   const [currentKanji, setCurrentKanji] = useState("");
+  const [end, setEnd] = useState(false);
+  const [answer, setAnswer] = useState(0);
 
   const reload = useSelector((state) => state.settings.reload);
   const dispatch = useDispatch();
@@ -16,6 +18,7 @@ export default function Quizz() {
   const kanji = useSelector((state) => state.api);
   const reloadState = useSelector((state) => state.settings.reload);
   const players = useSelector((state) => state.players);
+  const [pack, setPack] = useState(settings.pack);
 
   // // -----------------------------------------------------------------------------
 
@@ -53,11 +56,16 @@ export default function Quizz() {
 
   // Déclencher quand le kanji change
   useEffect(() => {
-    if (kanji.data?.length > 0) {
+    setAnswer(answer + 1);
+    if (answer === pack) {
+      if (!settings.alert) {
+        setEnd(true);
+      }
+    } else if (kanji.data?.length > 0) {
       const newKanji = randomKanji();
       setCurrentKanji(newKanji);
     }
-  }, [kanji.data, reloadState]); // Déclenché uniquement quand les données changent
+  }, [reloadState]); // Déclenché uniquement quand les données changent
 
   useEffect(() => {
     if (currentKanji) {
@@ -70,9 +78,13 @@ export default function Quizz() {
 
   return (
     <>
-      {/* <Liste /> */}
+      {!end ? (
+        <Card key={reload} currentKanji={currentKanji} player={players} />
+      ) : (
+        <Results />
+      )}
 
-      <Card key={reload} currentKanji={currentKanji} player={players} />
+      {/* {end && <h1>Quizz is over!</h1>} */}
     </>
   );
 }

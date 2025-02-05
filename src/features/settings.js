@@ -4,7 +4,9 @@ const initialState = {
   pseudo: "",
   difficulty: 1,
   timer: 15,
+  pack: 10,
   reload: 0,
+  alert: false,
 };
 
 const settings = createSlice({
@@ -23,10 +25,22 @@ const settings = createSlice({
     setTimer: (state, action) => {
       state.timer = action.payload;
     },
+    setPack: (state, action) => {
+      state.pack = action.payload;
+    },
+    setAlert: (state, action) => {
+      state.pack = action.payload;
+    },
   },
 });
 
-export const { setPseudo, setDifficulty, setReload, setTimer } =
-  settings.actions;
+export const {
+  setPseudo,
+  setDifficulty,
+  setReload,
+  setTimer,
+  setPack,
+  setAlert,
+} = settings.actions;
 
 export default settings.reducer;
