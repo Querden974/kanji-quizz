@@ -1,5 +1,6 @@
 import React from "react";
 import Alert from "./Alert";
+import Countdown from "./Countdown";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -34,6 +35,7 @@ export default function Card({ currentKanji, choicesData }) {
   return (
     <>
       <div className="card bg-base-100 w-96 shadow-xl">
+        <Countdown />
         {/* <button
           className="btn btn-warning ml-auto mt-auto"
           onClick={() => dispatch(setReload())}
