@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setPseudo, setDifficulty } from "../features/settings";
+import { setPseudo, setDifficulty, setTimer } from "../features/settings";
 import { setUrlApi } from "../features/kanjiApi";
 import { useState } from "react";
 import { getData } from "../features/kanjiApi";
@@ -45,7 +45,7 @@ export default function Settings() {
         <div className="form-control">
           <label className="label">
             <span className="label-text">
-              Grade level: {useSelector((state) => state.settings.difficulty)}
+              Grade level: <b>{settings.difficulty}</b>
             </span>
           </label>
           <input
@@ -70,6 +70,22 @@ export default function Settings() {
           </div>
         </div>
         {/* ------------------------------- */}
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">
+              Duration Timer: <b>{settings.timer} s</b>
+            </span>
+          </label>
+          <input
+            type="range"
+            min="5"
+            max="30"
+            value={settings.timer}
+            onChange={(e) => dispatch(setTimer(Number(e.target.value)))}
+            className="range"
+            step={1}
+          />
+        </div>
         <div className="card-actions justify-end">
           <button
             className={`btn btn-primary ${
