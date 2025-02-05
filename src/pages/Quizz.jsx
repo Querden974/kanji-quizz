@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "../components/Card";
 import Liste from "../components/Liste";
+import Answers from "../components/Answers";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
@@ -12,9 +13,10 @@ export default function Quizz() {
 
   const reload = useSelector((state) => state.settings.reload);
   const dispatch = useDispatch();
+  const settings = useSelector((state) => state.settings);
   const kanji = useSelector((state) => state.api);
-  const choicesData = useSelector((state) => state.choices);
   const reloadState = useSelector((state) => state.settings.reload);
+  const players = useSelector((state) => state.players);
 
   // // -----------------------------------------------------------------------------
 
@@ -59,7 +61,6 @@ export default function Quizz() {
   }, [kanji.data, reloadState]); // Déclenché uniquement quand les données changent
 
   useEffect(() => {
-    //console.log("🚀 currentKanji mis à jour :", currentKanji);
     if (currentKanji) {
       const choices = generateChoices(currentKanji);
       dispatch(setKanji(currentKanji));
@@ -69,14 +70,11 @@ export default function Quizz() {
   }, [currentKanji]); // Se déclenche uniquement quand currentKanji change
 
   return (
-    <>
+    <div className="flex gap-3">
       {/* <Liste /> */}
 
-      <Card
-        key={reload}
-        currentKanji={currentKanji}
-        choicesData={choicesData}
-      />
-    </>
+      <Card key={reload} currentKanji={currentKanji} player={players} />
+      <Answers />
+    </div>
   );
 }
