@@ -8,10 +8,11 @@ import { getDataKanji } from "../features/choices";
 
 export default function Card({ currentKanji, choicesData }) {
   const [select, setSelect] = useState(false); // Sélection de la réponse
-
+  const [end, setEnd] = useState(false);
   const [alertInfo, setAlertInfo] = useState({
     message: "",
     type: "",
+    icon: "",
   });
   const dispatch = useDispatch();
   const choices = useSelector((state) => state.choices.data);
@@ -26,16 +27,35 @@ export default function Card({ currentKanji, choicesData }) {
         ? "Bravo ! Tu as répondu correctement !"
         : "Mauvaise réponse !",
       type: isCorrect ? "alert-success" : "alert-error",
+      icon: isCorrect
+        ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        : "M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z",
     });
   }
+
+  function handleEnd() {
+    setSelect(true);
+    setAlertInfo({
+      message: "Temps écoulé ! Tu as perdu !",
+      type: "alert-error",
+      icon: "M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z",
+    });
+  }
+
   useEffect(() => {
     dispatch(getDataKanji());
   }, [currentKanji]); // Déclenché uniquement quand `currentKanji` change
 
+  useEffect(() => {
+    if (end) {
+      handleEnd();
+    }
+  }, [end]);
+
   return (
     <>
       <div className="card bg-base-100 w-96 shadow-xl">
-        <Countdown />
+        <Countdown status={setEnd} select={select} />
         {/* <button
           className="btn btn-warning ml-auto mt-auto"
           onClick={() => dispatch(setReload())}
@@ -73,7 +93,13 @@ export default function Card({ currentKanji, choicesData }) {
           </div>
         </div>
       </div>
-      {select && <Alert message={alertInfo.message} type={alertInfo.type} />}
+      {select && (
+        <Alert
+          message={alertInfo.message}
+          type={alertInfo.type}
+          icon={alertInfo.icon}
+        />
+      )}
     </>
   );
 }
