@@ -4,17 +4,22 @@ import { setPseudo, setDifficulty, setTimer } from "../features/settings";
 import { setUrlApi } from "../features/kanjiApi";
 import { useState } from "react";
 import { getData } from "../features/kanjiApi";
+import { setPlayer } from "../features/players";
 
 export default function Settings() {
   const settings = useSelector((state) => state.settings);
+  const players = useSelector((state) => state.players);
   const dispatch = useDispatch();
 
   const kanji = useSelector((state) => state.api);
 
-  function handleClick() {
+  function handleBtn(e) {
+    e.preventDefault();
+
     if (settings.difficulty && settings.pseudo.length > 0) {
       let difficulty = settings.difficulty;
       if (difficulty == 7) difficulty = 8;
+      dispatch(setPlayer(settings.pseudo));
       dispatch(setUrlApi(difficulty));
 
       if (!kanji.loading && !kanji.error && !kanji.data) {
@@ -37,7 +42,14 @@ export default function Settings() {
             className="input input-bordered"
             placeholder="Set your username"
             value={useSelector((state) => state.settings.pseudo)}
-            onChange={(e) => dispatch(setPseudo(e.target.value))}
+            onChange={(e) => {
+              dispatch(setPseudo(e.target.value));
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleBtn(e);
+              }
+            }}
           />
         </div>
         {/* ------------------------------- */}
@@ -91,7 +103,7 @@ export default function Settings() {
             className={`btn btn-primary ${
               !settings.pseudo ? "btn-disabled" : ""
             }`}
-            onClick={() => handleClick()}
+            onClick={(e) => handleBtn(e)}
           >
             Start Quizz
           </button>
