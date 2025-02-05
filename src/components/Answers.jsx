@@ -10,10 +10,10 @@ export default function Answers() {
   }, [player.answers]);
 
   return (
-    <div className="w-min card h-110  flex flex-wrap gap-2">
-      {/* {Array.apply(null, { length: 56 }).map((e, i) => (
-        <h1 className="bg-red-300 rounded text-white font-semibold text-3xl h-12 w-12 text-center">
-          g
+    <div className="w-min card h-110 flex flex-wrap gap-1">
+      {/* {Array.apply(null, { length: 100 }).map((e, i) => (
+        <h1 className="bg-red-300 rounded text-white font-semibold text-3xl w-10 h-10 text-center">
+          -
         </h1>
       ))} */}
       {answers.map(
@@ -23,7 +23,7 @@ export default function Answers() {
               key={index}
               className={`bg-${
                 answer.answer ? "success" : "error"
-              } rounded text-white font-semibold text-3xl h-12 w-12 inline-flex justify-center items-center`}
+              } rounded text-white font-semibold text-3xl h-10 w-10 inline-flex justify-center items-center`}
             >
               {answer.kanji}
             </h1>
