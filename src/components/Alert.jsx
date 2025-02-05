@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setReload } from "../features/settings";
 import { resetState } from "../features/kanjiApi";
+import countdown from "../functions/countdown";
 
-export default function Alert({ message, type }) {
+export default function Alert({ message, type, icon }) {
   const [progress, setProgress] = useState(0); // Progression en %
   const dispatch = useDispatch();
 
@@ -44,7 +45,7 @@ export default function Alert({ message, type }) {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="2"
-            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            d={icon}
           />
         </svg>
         <span className="font-bold text-xl">{message}</span>
