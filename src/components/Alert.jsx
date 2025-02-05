@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setReload } from "../features/settings";
 import { resetState } from "../features/kanjiApi";
-import countdown from "../functions/countdown";
 
 export default function Alert({ message, type, icon }) {
   const [progress, setProgress] = useState(0); // Progression en %
@@ -33,7 +32,10 @@ export default function Alert({ message, type, icon }) {
   }, []);
 
   return (
-    <div role="alert" className={`flex flex-col alert select-none ${type}`}>
+    <div
+      role="alert"
+      className={`flex flex-col relative alert select-none mt-3 w-96 ${type}`}
+    >
       <div className="flex items-center gap-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +50,7 @@ export default function Alert({ message, type, icon }) {
             d={icon}
           />
         </svg>
-        <span className="font-bold text-xl">{message}</span>
+        <span className="font-bold text-md">{message}</span>
       </div>
 
       <progress
