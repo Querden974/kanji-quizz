@@ -34,7 +34,7 @@ export default function Alert({ message, type, icon }) {
   return (
     <div
       role="alert"
-      className={`flex flex-col relative alert select-none mt-3 w-96 ${type}`}
+      className={`flex flex-col relative alert select-none  w-96 ${type}`}
     >
       <div className="flex items-center gap-4">
         <svg

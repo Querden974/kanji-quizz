@@ -10,22 +10,25 @@ export default function Answers() {
   }, [player.answers]);
 
   return (
-    <div className="card h-110 flex flex-wrap gap-2">
-      {/* {Array.apply(null, { length: 20 }).map((e, i) => (
+    <div className="w-min card h-110  flex flex-wrap gap-2">
+      {/* {Array.apply(null, { length: 56 }).map((e, i) => (
         <h1 className="bg-red-300 rounded text-white font-semibold text-3xl h-12 w-12 text-center">
           g
         </h1>
       ))} */}
-      {answers.map((answer, index) => (
-        <h1
-          key={index}
-          className={`bg-${
-            answer.answer ? "success" : "error"
-          } rounded text-white font-semibold text-3xl h-12 w-12 inline-flex justify-center items-center`}
-        >
-          {answer.kanji}
-        </h1>
-      ))}
+      {answers.map(
+        (answer, index) =>
+          index <= 55 && (
+            <h1
+              key={index}
+              className={`bg-${
+                answer.answer ? "success" : "error"
+              } rounded text-white font-semibold text-3xl h-12 w-12 inline-flex justify-center items-center`}
+            >
+              {answer.kanji}
+            </h1>
+          )
+      )}
     </div>
   );
 }

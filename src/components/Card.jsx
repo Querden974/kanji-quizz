@@ -1,5 +1,6 @@
 import React from "react";
 import Alert from "./Alert";
+import Answers from "../components/Answers";
 import Countdown from "./Countdown";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -60,53 +61,58 @@ export default function Card({ currentKanji, player }) {
   }, [end]);
 
   return (
-    <div className="flex flex-col h-110 static">
-      <div className="card bg-base-100 w-96  shadow-xl">
-        <Countdown status={setEnd} select={select} />
-        {/* <button
+    <div className="grid grid-cols-3 c gap-3">
+      {/* Empty collumn */}
+      <span></span>
+      <div className="flex flex-col h-110 relative gap-3">
+        <div className="card bg-base-100 w-96  shadow-xl static">
+          <Countdown status={setEnd} select={select} />
+          {/* <button
           className="btn btn-warning ml-auto mt-auto"
           onClick={() => dispatch(setReload())}
         >
           Reload
         </button> */}
-        <figure className="px-10 pt-10 flex flex-col gap-4">
-          <h1 className="text-9xl font-bold pb-6 select-none">
-            {currentKanji}
-          </h1>
-        </figure>
-        <div className="card-body items-center text-center">
-          <p>Que signifie ce kanji ?</p>
-          <div className="card-actions grid grid-cols-2 gap-4 w-full">
-            {choices?.length > 0 ? (
-              choices.map((choice, index) => (
-                <button
-                  key={`${choice.kanji}-${index}`}
-                  className={`select-none py-2 px-4 cursor-pointer rounded capitalize font-bold ${
-                    !select
-                      ? "bg-primary hover:bg-primary/75"
-                      : choice.kanji === currentKanji
-                      ? "bg-success "
-                      : "bg-error "
-                  } }`}
-                  onClick={() => pickChoice(choice)}
-                  disabled={select}
-                >
-                  {choice.heisig_en}
-                </button>
-              ))
-            ) : (
-              <span className="loading loading-spinner loading-lg"></span>
-            )}
+          <figure className="px-10 pt-10 flex flex-col gap-4">
+            <h1 className="text-9xl font-bold pb-6 select-none">
+              {currentKanji}
+            </h1>
+          </figure>
+          <div className="card-body items-center text-center">
+            <p>Que signifie ce kanji ?</p>
+            <div className="card-actions grid grid-cols-2 gap-4 w-full">
+              {choices?.length > 0 ? (
+                choices.map((choice, index) => (
+                  <button
+                    key={`${choice.kanji}-${index}`}
+                    className={`select-none py-2 px-4 cursor-pointer rounded capitalize font-bold ${
+                      !select
+                        ? "bg-primary hover:bg-primary/75"
+                        : choice.kanji === currentKanji
+                        ? "bg-success "
+                        : "bg-error "
+                    } }`}
+                    onClick={() => pickChoice(choice)}
+                    disabled={select}
+                  >
+                    {choice.heisig_en}
+                  </button>
+                ))
+              ) : (
+                <span className="loading loading-spinner loading-lg"></span>
+              )}
+            </div>
           </div>
         </div>
+        {select && (
+          <Alert
+            message={alertInfo.message}
+            type={alertInfo.type}
+            icon={alertInfo.icon}
+          />
+        )}
       </div>
-      {select && (
-        <Alert
-          message={alertInfo.message}
-          type={alertInfo.type}
-          icon={alertInfo.icon}
-        />
-      )}
+      <Answers />
     </div>
   );
 }

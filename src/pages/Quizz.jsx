@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "../components/Card";
 import Liste from "../components/Liste";
-import Answers from "../components/Answers";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
@@ -70,11 +69,10 @@ export default function Quizz() {
   }, [currentKanji]); // Se déclenche uniquement quand currentKanji change
 
   return (
-    <div className="flex gap-3">
+    <>
       {/* <Liste /> */}
 
       <Card key={reload} currentKanji={currentKanji} player={players} />
-      <Answers />
-    </div>
+    </>
   );
 }
