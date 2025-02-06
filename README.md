@@ -15,6 +15,12 @@ API utilisée : https://kanjiapi.dev/v1/
 
 ## Changelog
 
+### Version 1.3
+
+**Date de publication :** _06/02/2025_
+
+- Ajout du responsive design pour les différentes tailles d'écran.
+
 ### Version 1.2
 
 **Date de publication :** _05/02/2025_
