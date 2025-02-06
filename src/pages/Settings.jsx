@@ -44,12 +44,13 @@ export default function Settings() {
           </label>
           <input
             type="text"
-            className="input input-bordered"
+            className="input input-bordered focus:overflow-clip"
             placeholder="Set your username"
             value={useSelector((state) => state.settings.pseudo)}
             onChange={(e) => {
               dispatch(setPseudo(e.target.value));
             }}
+            onFocus={window.scrollTo(0, 0)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleBtn(e);

@@ -27,7 +27,7 @@ export default function Answers({ isLine }) {
               key={index}
               className={`bg-${
                 answer.answer ? "success" : "error"
-              } select-none rounded text-white font-semibold text-xl md:text-2xl min-h-8 min-w-8 max-w-10 max-h-10 inline-flex justify-center items-center`}
+              } select-none rounded text-white font-semibold text-xl md:text-2xl min-h-8 min-w-8 max-w-10 max-h-10 lg:w-10 lg:h-10 inline-flex justify-center items-center`}
             >
               {answer.kanji}
             </h1>
