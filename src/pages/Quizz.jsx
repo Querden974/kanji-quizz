@@ -38,7 +38,6 @@ export default function Quizz() {
 
   // Get 4 random kanji
   function generateChoices(newKanji) {
-    // console.log(newKanji);
     if (!kanji.data || kanji.data.length < 4) return [];
 
     const choices = new Set();

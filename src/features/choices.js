@@ -15,12 +15,10 @@ const choicesSlice = createSlice({
   reducers: {
     setKanji: (state, action) => {
       state.kanji = action.payload;
-      //console.log("slice:" + state.kanji);
     },
     addChoices: (state, action) => {
       state.choices = [];
       state.choices = action.payload;
-      //console.log("slice:" + state.choices);
     },
     addData: (state, action) => {
       state.data = [];
