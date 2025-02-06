@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-base-200 gap-4">
+      <div className="overflow-clip flex flex-col items-center justify-center min-h-screen min-w-screen py-2 sm:bg-base-200 gap-4">
         {kanji.data ? <Quizz /> : <Settings />}
       </div>
     </>

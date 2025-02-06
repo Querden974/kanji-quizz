@@ -11,7 +11,9 @@ export default function Answers({ isLine }) {
 
   return (
     <div
-      className={`card  flex flex-wrap gap-1 ${isLine ? "flex-row " : "h-110"}`}
+      className={`card justify-start flex flex-wrap gap-1 ${
+        isLine ? "flex-row " : "lg:h-110 flex-row lg:flex-col"
+      }`}
     >
       {/* {Array.apply(null, { length: 100 }).map((e, i) => (
         <h1 className="bg-red-300 rounded text-white font-semibold text-3xl w-10 h-10 text-center">
@@ -25,7 +27,7 @@ export default function Answers({ isLine }) {
               key={index}
               className={`bg-${
                 answer.answer ? "success" : "error"
-              } select-none rounded text-white font-semibold text-3xl h-10 w-10 inline-flex justify-center items-center`}
+              } select-none rounded text-white font-semibold text-xl md:text-2xl min-h-8 min-w-8 max-w-10 max-h-10 inline-flex justify-center items-center`}
             >
               {answer.kanji}
             </h1>

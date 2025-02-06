@@ -33,7 +33,7 @@ export default function Settings() {
     }
   }
   return (
-    <div className="card bg-base-100 w-96 shadow-xl">
+    <div className="card bg-base-100 sm:w-96 sm:shadow-xl">
       <div className="card-body">
         <h2 className="card-title">Quizz Settings</h2>
         <p>Set your name and choose the grade level.</p>

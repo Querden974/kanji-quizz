@@ -61,11 +61,11 @@ export default function Card({ currentKanji, player }) {
   }, [end]);
 
   return (
-    <div className="grid grid-cols-3 c gap-3">
+    <div className="lg:grid lg:grid-cols-3 flex flex-col-reverse gap-3">
       {/* Empty collumn */}
       <span></span>
       <div className="flex flex-col h-110 relative gap-3">
-        <div className="card bg-base-100 w-96  shadow-xl static">
+        <div className="card sm:bg-base-100 w-96  sm:shadow-xl static">
           <Countdown status={setEnd} select={select} />
           {/* <button
           className="btn btn-warning ml-auto mt-auto"
