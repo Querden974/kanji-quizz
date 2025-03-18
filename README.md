@@ -1,5 +1,7 @@
 # Kanji Quizz
 
+**---> [Visit the website](https://gautier-rayeroux.fr/projets/kanji_quizz/) <---**
+
 Ce projet est une application React qui utilise Redux pour gérer les états et les actions.
 Le but est de créer un jeu de quizz en japonais.
 
